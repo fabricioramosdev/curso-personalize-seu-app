@@ -2,14 +2,14 @@ package br.com.alura.orgs.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
+import br.com.alura.orgs.R
 import br.com.alura.orgs.databinding.ProdutoItemBinding
+import br.com.alura.orgs.extensions.tentaCarregarImagem
 import br.com.alura.orgs.model.Produto
 import coil.load
-
-
 import java.math.BigDecimal
 import java.text.NumberFormat
 import java.util.*
@@ -33,12 +33,16 @@ class ListaProdutosAdapter(
             val valorEmMoeda: String =
                 formataParaMoedaBrasileira(produto.valor)
             valor.text = valorEmMoeda
-            binding.produtoImageview.load("https://c.ndtvimg.com/2019-06/8lrdfi6_orange650_650x400_07_June_19.jpg")
 
+            val visibilidade = if(produto.imagem != null){
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
+            binding.imageView.visibility = visibilidade
 
-
-
+            binding.imageView.tentaCarregarImagem(produto.imagem)
         }
 
         private fun formataParaMoedaBrasileira(valor: BigDecimal): String {
